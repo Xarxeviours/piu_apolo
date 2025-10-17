@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I'm Sorry 💕</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffe6f2 0%, #f6e1ff 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      scroll-behavior: smooth;
+    }
+
+    /* Floating hearts */
+    .floating-hearts {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      opacity: 0;
+      animation: float-up 6s infinite;
+    }
+
+    @keyframes float-up {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .heart:nth-child(1) {
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .heart:nth-child(2) {
+      left: 25%;
+      animation-delay: 1.5s;
+    }
+
+    .heart:nth-child(3) {
+      left: 40%;
+      animation-delay: 3s;
+    }
+
+    .heart:nth-child(4) {
+      left: 60%;
+      animation-delay: 4.5s;
+    }
+
+    .heart:nth-child(5) {
+      left: 75%;
+      animation-delay: 2s;
+    }
+
+    .heart:nth-child(6) {
+      left: 90%;
+      animation-delay: 5s;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 30px 15px 60px;
+      text-align: center;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Fade-out used when navigating away */
+    .page.exiting {
+      animation: fadeOut 0.45s ease-in-out forwards;
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+    }
+
+    .bow-decoration {
+      font-size: 32px;
+      margin: 15px 0;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    /* Image styling */
+    .hello-kitty.first-img {
+      width: 320px;
+      max-width: 90vw;
+      height: auto;
+      margin: 40px auto 30px auto;
+      display: block;
+      object-fit: contain;
+      transition: transform 0.4s ease;
+      filter: drop-shadow(0 5px 15px rgba(255, 105, 180, 0.2));
+    }
+
+    @media (max-width: 480px) {
+      .hello-kitty.first-img {
+        width: 220px;
+        margin: 30px auto 20px auto;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 1024px) {
+      .container {
+        max-width: 600px;
+        padding: 40px 25px 70px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+      }
+
+      .hello-kitty.first-img {
+        width: 340px;
+        margin: 50px auto 30px auto;
+      }
+    }
+
+    h1 {
+      color: #c754b7;
+      font-size: 26px;
+      margin: 15px 0;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      color: #b168a3;
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 15px 0;
+      padding: 0 10px;
+    }
+
+    .button {
+      background: linear-gradient(135deg, #ff1493 0%, #7a39ff 100%);
+      /* deep pink -> violet */
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      /* increased touch target */
+      font-size: 18px;
+      /* larger text */
+      font-weight: 600;
+      border-radius: 44px;
+      cursor: pointer;
+      margin-top: 22px;
+      box-shadow: 0 8px 26px rgba(122, 57, 255, 0.18), 0 4px 12px rgba(255, 20, 147, 0.08);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 34px rgba(122, 57, 255, 0.26), 0 6px 16px rgba(255, 20, 147, 0.12);
+    }
+
+    .message-card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 15px 0;
+      box-shadow: 0 5px 18px rgba(200, 90, 180, 0.15);
+      border: 1.5px solid #f6ccf4;
+    }
+
+    .emoji-large {
+      font-size: 50px;
+      margin: 15px 0;
+    }
+
+    .reasons-list {
+      text-align: left;
+      margin: 15px 0;
+      color: #b168a3;
+      font-size: 15px;
+      list-style: none;
+    }
+
+    .reasons-list li {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .star-decoration {
+      margin-right: 8px;
+      color: #ff8ad0;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 22px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+
+      .button {
+        font-size: 16px;
+        padding: 12px 34px;
+      }
+
+      .hello-kitty {
+        width: 150px;
+      }
+
+      .message-card {
+        padding: 18px;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 1024px) {
+      .container {
+        max-width: 600px;
+        padding: 40px 25px 70px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .subtitle {
+        font-size: 17px;
+      }
+
+      .button {
+        font-size: 20px;
+        padding: 16px 44px;
+      }
+
+      .hello-kitty {
+        width: 220px;
+      }
+
+      .message-card {
+        padding: 25px;
+      }
+
+      .emoji-large {
+        font-size: 60px;
+      }
+
+      .bow-decoration {
+        font-size: 40px;
+      }
+
+      .reasons-list {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 22px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+
+      .button {
+        font-size: 16px;
+        padding: 12px 34px;
+      }
+
+      .hello-kitty {
+        width: 150px;
+      }
+
+      .message-card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="floating-hearts">
+    <div class="heart">💕</div>
+    <div class="heart">💖</div>
+    <div class="heart">💗</div>
+    <div class="heart">💕</div>
+    <div class="heart">💖</div>
+    <div class="heart">💗</div>
+  </div>
+
+  <div class="container">
+    <!-- Page 1 -->
+    <div id="page1" class="page active">
+      <div class="bow-decoration">🎀</div>
+      <img class="hello-kitty first-img" src="./pic1.png" alt="Kitty">
+      <h1>I'm so sorry, my love 💖</h1>
+      <p class="subtitle">Ami jani je ami tomay hurt korechi, and it hurts me too... this is my little way to make you
+        smile 💗</p>
+      <button class="button" onclick="showPage(2)">Tap to Continue 💌</button>
+    </div>
+
+    <!-- Page 2 -->
+    <div id="page2" class="page">
+      <div class="bow-decoration">🌸</div>
+      <div class="emoji-large">🥺</div>
+      <h1>Please forgive me</h1>
+      <div class="message-card">
+        <p class="subtitle">I never meant to hurt you. You mean the world to me, and seeing you upset breaks my heart
+          into tiny pieces.</p>
+        <p class="subtitle" style="margin-top: 10px;">I promise to do better, to listen more, and to cherish every
+          moment with you. 🌷</p>
+      </div>
+      <button class="button" onclick="showPage(3)">Next 💝</button>
+    </div>
+
+
+
+    <div id="page3" class="page">
+      <div class="bow-decoration">✨</div>
+      <h1>Why I love you</h1>
+      <div class="message-card">
+        <ul class="reasons-list">
+          <li><span class="star-decoration">⭐</span>Your smile lights up my days</li>
+          <li><span class="star-decoration">⭐</span>You understand me like no one else</li>
+          <li><span class="star-decoration">⭐</span>Your laugh is my favorite sound</li>
+          <li><span class="star-decoration">⭐</span>You make me want to be better</li>
+          <li><span class="star-decoration">⭐</span>Every moment with you is special</li>
+          <li><span class="star-decoration">⭐</span>You're my best friend and my love</li>
+        </ul>
+      </div>
+      <button class="button" onclick="showPage(4)">Continue 🌈</button>
+    </div>
+
+    <div id="page4" class="page">
+      <div class="bow-decoration">💫</div>
+      <div class="emoji-large">🤝💕</div>
+      <h1>My Promise to You</h1>
+      <div class="message-card">
+        <p class="subtitle">I promise to...</p>
+        <ul class="reasons-list">
+          <li><span class="star-decoration">💗</span>Tomay kokhono R galagali debo na.</li>
+          <li><span class="star-decoration">💗</span>R voy dekhabo na</li>
+          <li><span class="star-decoration">💗</span>Tomr opor chillabo na</li>
+          <li><span class="star-decoration">💗</span>Tumi amar kono kaje jate hurt na hou seidike kheyal rakhbo.</li>
+          <li><span class="star-decoration">💗</span>Ami tomar sathe thakte chai.Tomake Harate chai na.</li>
+        </ul>
+      </div>
+      <button class="button" onclick="showPage(5)">Final Message 🌺</button>
+    </div>
+
+
+    <div id="page5" class="page">
+      
+      <h1>Can we be okay again?Pleaseee</h1>
+      <div class="message-card">
+        <p class="subtitle">I miss us. I miss your smile, your warmth, and the way everything feels right when we're
+          together. Ami sotti tomake chai....I need you...I want you .</p>
+        <p class="subtitle" style="margin-top: 10px;">Please give me another chance to make things right. 💕</p>
+      </div>
+      <div class="emoji-large">🥰</div>
+      <p class="subtitle" style="font-style: italic; margin-top: 15px;">With all my love,<br>Forever yours 💖</p>
+    </div>
+    <button class="button" onclick="navigateTo('next.html')">Last but not the list 💌</button>
+  </div>
+
+  <script>
+    let isTransitioning = false;
+
+    function showPage(num) {
+      if (isTransitioning) return; // ignore clicks during transition
+      const current = document.querySelector('.page.active');
+      const target = document.getElementById('page' + num);
+      if (!target || current === target) return;
+
+      isTransitioning = true;
+
+      // start exit animation on current
+      current.classList.add('exiting');
+
+      const cleanupAndShow = () => {
+        current.classList.remove('active', 'exiting');
+        target.classList.add('active');
+        // small delay to allow new page to paint
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            isTransitioning = false;
+          });
+        });
+      };
+
+      // If the browser supports animationend, wait for it; otherwise, fallback to timeout
+      const onAnimEnd = (e) => {
+        if (e.target === current) {
+          current.removeEventListener('animationend', onAnimEnd);
+          cleanupAndShow();
+        }
+      };
+
+      current.addEventListener('animationend', onAnimEnd);
+
+      // Fallback: if animationend doesn't fire within 600ms, proceed anyway
+      setTimeout(() => {
+        if (isTransitioning) {
+          current.removeEventListener('animationend', onAnimEnd);
+          cleanupAndShow();
+        }
+      }, 700);
+    }
+
+    // Navigate to the next .page element found in DOM order
+    function showNext() {
+      const pages = Array.from(document.querySelectorAll('.page'));
+      const current = document.querySelector('.page.active');
+      if (!current) return;
+      const idx = pages.indexOf(current);
+      if (idx === -1) return;
+      const next = pages[idx + 1];
+      if (!next) return; // nothing after
+      const id = next.id || '';
+      const m = id.match(/^page(\d+)$/);
+      if (m) showPage(m[1]);
+    }
+
+    // Animate current page out, then navigate to a different URL
+    function navigateTo(url) {
+      if (isTransitioning) return;
+      const current = document.querySelector('.page.active');
+      if (!current) { window.location.href = url; return; }
+
+      isTransitioning = true;
+      current.classList.add('exiting');
+
+      const doNavigate = () => {
+        // allow any cleanup then redirect
+        window.location.href = url;
+      };
+
+      const onAnimEnd = (e) => {
+        if (e.target === current) {
+          current.removeEventListener('animationend', onAnimEnd);
+          doNavigate();
+        }
+      };
+
+      current.addEventListener('animationend', onAnimEnd);
+
+      // fallback
+      setTimeout(() => {
+        current.removeEventListener('animationend', onAnimEnd);
+        doNavigate();
+      }, 700);
+    }
+  </script>
+</body>
+
+</html>
